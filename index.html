@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link  href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@200&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/>
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+    <h1 class="h1">Valorant cards</h1>
+    <section class="cards" id="card">
+        <!--
+        <div class="container">
+            <div class="box" id="personagem" >
+                <img id="imagem" src="">
+            </div>   
+        </div> -->
+    </section>
+
+    <py-script>
+        from pyodide.http import pyfetch
+        import asyncio
+        import js
+            
+        response = await pyfetch(url="https://valorant-api.com/v1/agents", method="GET")
+        
+        output = await response.json()
+        
+        agentes = []
+
+        for valor in output['data']:
+            agentes.append(valor)
+            
+        nome = agentes[0]['displayName']
+        image = agentes[0]['fullPortrait']
+        background = agentes[0]['background']
+
+        card = document.getElementById('card')
+
+        for agente in agentes:
+            
+            if(agente['fullPortrait'] == None):
+                continue
+            else:
+                personagem = agente['displayName']
+                <!-- CRIA ELEMENTO TIPO: div, img... -->
+                div_container = document.createElement("div")
+
+                <!-- ADICIONA UM ATRIBUTO TIPO: class, id, src... -->
+                div_container.setAttribute("class", "container")
+                div_container.setAttribute("id", f"container_id_{personagem}")
+
+                card.append(div_container)
+                    
+                box = document.getElementById(f'container_id_{personagem}')
+                <!-- CRIA ELEMENTO TIPO: div, img... -->
+
+                div_box = document.createElement("div")
+                <!-- ADICIONA UM ATRIBUTO TIPO: class, id, src... -->
+                div_box.setAttribute("class", "box")
+                div_box.setAttribute("id", f"{agente['displayName']}")
+
+                box.append(div_box)
+
+                imagem_agente = agente['fullPortrait']
+
+                elemento_imagem = document.createElement("img")
+                elemento_imagem.setAttribute("src", f"{imagem_agente}")
+                
+                id_agente = document.getElementById(f'{personagem}')
+                id_agente.append(elemento_imagem)
+
+                background_agente = agente['background']
+
+                id_agente.style.backgroundImage = f"url('{background_agente}'), linear-gradient(#273753, red)"
+            
+    </py-script> 
+</body>
+</html>
