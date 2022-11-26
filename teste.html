@@ -10,19 +10,7 @@
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
 </head>
-<body>
-    <header>
-        <div class="webContainer">
-            <nav>
-                <div class="logo">
-                    <p><i>V</i>alorant</p>
-                </div>
-                <div class="menu">
-                    <a href="sorteador_mapas.html" class="primaryBtn">Sorteador</a>
-                </div>
-            </nav>
-        </div>
-    </header>
+<body id="bodyt">
     <h1 class="h1">Valorant cards</h1>
     <section class="cards" id="card">
         <!--
@@ -31,6 +19,7 @@
                 <img id="imagem" src="">
             </div>   
         </div> -->
+        <!-- <a href="agente.html&id=dade69b4-4f5a-8528-247b-219e5a1facd6">teste</a> -->
     </section>
 
     <py-script>
@@ -51,44 +40,40 @@
         image = agentes[0]['fullPortrait']
         background = agentes[0]['background']
 
+        teste = agentes[0]['backgroundGradientColors']
+
         card = document.getElementById('card')
 
         for agente in agentes:
-            
             if(agente['fullPortrait'] == None):
                 continue
             else:
                 personagem = agente['displayName']
-
+                <!-- CRIA ELEMENTO TIPO: div, img... -->
                 div_container = document.createElement("div")
 
-                
+                <!-- ADICIONA UM ATRIBUTO TIPO: class, id, src... -->
                 div_container.setAttribute("class", "container")
                 div_container.setAttribute("id", f"container_id_{personagem}")
 
                 card.append(div_container)
                     
                 box = document.getElementById(f'container_id_{personagem}')
-
-
-                a_agente = document.createElement("a")
-                a_agente.setAttribute("href", f"agente.html?id={agente['uuid']}")
-                a_agente.setAttribute("id", f"agente_id_{personagem}")
-
-                box.append(a_agente)
-
-                a_agente_id = document.getElementById(f"agente_id_{personagem}")
-
-                
+                <!-- CRIA ELEMENTO TIPO: div, img... -->
 
                 div_box = document.createElement("div")
-                
+                <!-- ADICIONA UM ATRIBUTO TIPO: class, id, src... -->
                 div_box.setAttribute("class", "box")
                 div_box.setAttribute("id", f"{agente['displayName']}")
 
+                box.append(div_box)
 
+                <!-- Testando -->
+                a_box = document.createElement("a")
+                card.append(a_box)
 
-                a_agente_id.append(div_box)
+                a_box.setAttribute("href", f"agente.html?id={agente['uuid']}")
+                <!-- Fechamento do teste -->
 
                 imagem_agente = agente['fullPortrait']
 
@@ -105,7 +90,8 @@
                 color3 = agente['backgroundGradientColors'][2]
                 color4 = agente['backgroundGradientColors'][3]
 
-                id_agente.style.backgroundImage = f"url('{background_agente}'), linear-gradient(#{color1}, #{color2}, #{color3}, #{color4})"          
+                id_agente.style.backgroundImage = f"url('{background_agente}'), linear-gradient(#{color1}, #{color2}, #{color3}, #{color4})"
+            
     </py-script> 
 </body>
 </html>

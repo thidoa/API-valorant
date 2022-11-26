@@ -1,3 +1,10 @@
+@font-face {
+    font-family: valorant;
+    src: url(Valorant\ Font.ttf);
+ }
+
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+
 * {
     padding: 0;
     margin: 0;
@@ -7,9 +14,11 @@
 }
 
 body {
-    width: 100%;
-    height: 100vh;
-    background-color: #1a1a1a;
+    /* width: 100%;
+    height: 100vh; */
+    /* background-color: #1a1a1a; */
+    background-image: linear-gradient(#1a1a1a, red);
+    
 }
 
 .h1 {
@@ -84,4 +93,106 @@ body {
 img {
     width: 100%;
     height: 100%;
+}
+
+
+.webContainer {
+    position: relative;
+    z-index: 1000;
+}
+
+.webContainer nav {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+nav .logo {
+    width: 40%;
+}
+
+nav .menu {
+    display: flex;
+    width: 40%;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.menu ul {
+    list-style: none;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+.button {
+    line-height: 65px;
+}
+
+.button button {
+    padding: 12px 30px;
+    background: var(--maincolor);
+    border: none;
+    outline: none;
+    color: #FFF;
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.logo p {
+    font-family: valorant;
+    font-size: 24px;
+    color: #ff4566;
+    font-weight: lighter;
+    line-height: 65px;
+    margin-left: 40px;
+    text-transform: uppercase;
+}
+
+.logo i {
+    font-family: valorant;
+    font-size: 24px;
+    color: #fff;
+    font-weight: lighter;
+    line-height: 65px;
+    margin-left: 40px;
+    text-transform: uppercase;
+}
+
+
+.primaryBtn {
+    padding: 15px 56px;
+    margin-right: 40px;
+    background: #ff4566;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    color: #FFF;
+    font-weight: 700;
+    font-family: valorant;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: .5s;
+}
+
+.primaryBtn:hover {
+    background: #fff;
+    color: #ff4566;
+    transition: .5s;
+}
+
+.square {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #0f1923;
+    clip-path: circle(16% at bottom left);
 }

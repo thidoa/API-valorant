@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
+    <title>Sorteador Valorant</title>
+    <link rel="stylesheet" href="sorteador_mapas.css">
+</head>
+<body>
+    <h2 id="saida">SORTEADOR DE MAPAS</h2>
+    <img class="fundo">
+    <div class="container">
+        <div>
+            <button class="btn" id="button" type="submit" pys-onClick="button">
+            <span class="btn__inner">
+                <span class="btn__slide"></span>
+                <span class="btn__content">Sortear Mapa</span>
+            </span>
+            </button>
+        </div>
+        <!-- <video autoplay loop poster="images/torres.jpg" class="bg_video">
+            <source src="valorant_video.mp4" type="video/mp4">
+        </video> -->
+        <!-- <div>
+            <button class="btn btn--light">
+            <span class="btn__inner">
+                <span class="btn__slide"></span>
+                <span class="btn__content">PLAY VALORANT (RİOT GAMES)</span>
+            </span>
+            </button>
+        </div> -->
+    </div>
+
+    
+
+    <py-script>
+        from pyodide.http import pyfetch
+        import asyncio
+        import random
+        import js
+
+        response = await pyfetch(url="https://valorant-api.com/v1/maps", method="GET")
+        
+        output = await response.json()
+        
+
+        mapas = []
+        fundos = []
+        esqueletos = []
+        
+        for valor in output['data']:
+            if valor['displayName'] != 'The Range':
+                mapas.append(valor['displayName'])
+                fundos.append(valor['splash'])
+                esqueletos.append(valor['displayIcon'])
+
+        body = document.querySelector('body')
+        h2 = document.querySelector('h2')
+        esqueleto = document.querySelector('img')
+
+        def button(*args, **kwargs):
+            mapa_sorteado = random.randint(1, len(mapas))
+            saida = Element('saida')
+            saida.write(mapas[mapa_sorteado].upper())
+
+            body.style.backgroundImage = f"url({fundos[mapa_sorteado]})" 
+            h2.style.fontSize = "100px"
+            esqueleto.setAttribute("src", f"{esqueletos[mapa_sorteado]}")
+    </py-script>
+</body>
+</html>
