@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <link rel="stylesheet" href="sorteador_times.css">
+    
+    
+    
+    <title>Sorteador de times</title>
+    
+</head>
+
+<body>
+    <div class="cadastro">
+        <h1>Sorteador de time</h1>
+        <form onsubmit="return false">
+            <label for="name">NICK:</label>
+            
+            <input class="name" type="text" id="name" name="name" placeholder="NOME" required>
+            <button class="btn" pys-onClick="cadastrar" type="submit" id="btn-form">
+                <span class="btn__inner">
+                    <span class="btn__slide"></span>
+                    <span class="btn__content">Cadastrar</span>
+                </span>
+            </button>
+            
+        </form>
+        <div class="botoes">
+            <button class="btn" id="sortear" type="button" pys-onClick="Sortear">
+                <span class="btn__inner">
+                    <span class="btn__slide"></span>
+                    <span class="btn__content">Sortear</span>
+                </span>
+            </button>
+            <button class="btn" id="limpar" type="button" pys-onClick="Limpar">
+                <span class="btn__inner">
+                    <span class="btn__slide"></span>
+                    <span class="btn__content">Limpar</span>
+                </span>
+            </button>
+        </div>
+    </div>
+    <!-- <py-button id="sortear" label="Sortear" type="button" pys-onClick="Sortear"></py-button> -->
+    <!-- <py-button id="limpar" label="Limpar" type="button" pys-onClick="Limpar"></py-button> -->
+    
+    <section id="times" class="times">
+        <div id="nicks" class="jogadores">
+            <!-- <div class="jogador">
+                <p>Thidoa</p>
+                <button class="btn">
+                    <span class="btn__inner">
+                        <span class="btn__slide"></span>
+                        <span id="vamo" class="btn__content">X</span>
+                    </span>
+                </button>
+            </div> -->
+        </div>
+        
+
+
+    </section>
+    <header id="header">
+        <div class="defensores">Defensores</div>
+        <div class="logo">
+            <div class="first"><div class="border"></div></div>
+            <div class="second"></div>
+        </div> 
+        <div class="atacantes">Atacantes</div>
+    </header>
+    <main id="main">
+        <div id="defesa" class="defesa"></div>
+
+        <div id="mapa" class="mapa">
+            <h1 id="h1_mapa"></h1>
+        </div> 
+              
+        <div id="ataque" class="ataque"></div>
+    </main>
+    <py-script>
+        from pyodide.http import pyfetch
+        import asyncio
+        import random
+        import js
+        from pyodide import JsProxy
+
+        response = await pyfetch(url="https://valorant-api.com/v1/maps", method="GET")
+        output = await response.json()
+
+        api_agente = await pyfetch(url="https://valorant-api.com/v1/agents", method="GET")
+        agente_saida = await api_agente.json()
+        
+        
+
+        jogadores = []
+
+        div_atacantes = document.getElementById('nicks')
+            
+
+        <!-- <div id="nicks" class="jogadores">
+            <div class="jogador">
+                <p>Thidoa</p>
+                <button class="btn">
+                    <span class="btn__inner">
+                        <span class="btn__slide"></span>
+                        <span class="btn__content">X</span>
+                    </span>
+                </button>
+            </div>
+        </div> -->
+        
+        def cadastrar(*args,**kwargs):
+            jogadores.append(Element('name').value) 
+
+            
+            div_jogador = document.createElement("div")
+            div_jogador.setAttribute("id", f"div_{Element('name').value}")
+            div_jogador.setAttribute("class", "jogador")
+            div_atacantes.append(div_jogador)
+
+            p_jogador = document.createElement("p")
+            p_jogador.setAttribute("id", f"p_{Element('name').value}")
+
+            botao = document.createElement("button")
+            botao.setAttribute("id", f"btn_{Element('name').value}")
+            botao.setAttribute("class", "btn")
+
+            d_jogador = document.getElementById(f"div_{Element('name').value}")
+            d_jogador.append(p_jogador)
+            d_jogador.append(botao)
+
+            nick = Element(f"p_{Element('name').value}")
+            nick.write(Element('name').value)
+            
+            btn_inner = document.createElement("span")
+            btn_inner.setAttribute("id", f"btn_inner_{Element('name').value}")
+            btn_inner.setAttribute("class", "btn__inner")
+
+            botao_jogador = document.getElementById(f"btn_{Element('name').value}")
+            botao_jogador.append(btn_inner)
+
+            btn_slide = document.createElement("span")
+            btn_slide.setAttribute("class", "btn__slide")
+
+            btn_content = document.createElement("span")
+            btn_content.setAttribute("id", f"btn_content_{Element('name').value}")
+            btn_content.setAttribute("class", "btn__content")
+
+            id_btn_inner = document.getElementById(f"btn_inner_{Element('name').value}")
+            id_btn_inner.append(btn_slide)
+            id_btn_inner.append(btn_content)
+
+            btn__content = Element(f"btn_content_{Element('name').value}")
+            btn__content.write("X")
+            
+            document.getElementById('name').value=''
+            
+        <!--
+         <div class="jogador">
+            
+            <div class="img"></div>
+            <div class="nick">
+                <img src="https://media.valorant-api.com/agents/roles/1b47567f-8f7b-444b-aae3-b0c634622d10/displayicon.png" alt="">
+                <p>THIDOA</p>
+            </div>
+        </div> -->
+        def Sortear(proxy: JsProxy) -> None:
+            timeA = []
+            timeB = []
+            random.shuffle(jogadores)
+            for jogador in jogadores:
+                if len(timeA) < (len(jogadores)/2):
+                    timeA.append(jogador)
+                else:
+                    timeB.append(jogador)
+            <!-- agentes = sortear_personagem(timeA) -->
+            time_A = [timeA, sortear_personagem(timeA)]
+            time_B = [timeB, sortear_personagem(timeB)]
+
+            
+            for jogador in range(len(timeA)):
+            
+                ataque = document.getElementById("ataque")
+
+                div_jogador = document.createElement("div")
+                div_jogador.setAttribute("id", f"jogador_{time_A[0][jogador]}")
+                div_jogador.setAttribute("class", "jogador")
+
+                div_img = document.createElement("div")
+                div_img.setAttribute("class", "img")
+                div_img.setAttribute("id", f"img_{time_A[0][jogador]}")
+
+                div_nick = document.createElement("div")
+                div_nick.setAttribute("class", "nick")
+                div_nick.setAttribute("id", f"nick_{time_A[0][jogador]}")
+
+                img_nick = document.createElement("img")
+                img_nick.setAttribute("src", f"{time_A[1][jogador]['role']['displayIcon']}")
+
+                p_nick = document.createElement("p")
+                p_nick.setAttribute("id", f"p_nick_{time_A[0][jogador]}")
+
+                div_nick.append(img_nick)
+                div_nick.append(p_nick)
+
+                
+                
+                div_jogador.append(div_img)
+                div_jogador.append(div_nick)
+
+                ataque.append(div_jogador)
+
+                img_nome = document.getElementById(f"img_{time_A[0][jogador]}")
+                img_nome.style.backgroundImage = f"url({time_A[1][jogador]['displayIcon']})"
+
+                pyscript.write(f"p_nick_{time_A[0][jogador]}", time_A[0][jogador])
+
+            for jogador in range(len(timeB)):
+                defesa = document.getElementById("defesa")
+
+                div_jogador = document.createElement("div")
+                div_jogador.setAttribute("id", f"jogador_{time_B[0][jogador]}")
+                div_jogador.setAttribute("class", "jogador")
+
+                div_img = document.createElement("div")
+                div_img.setAttribute("class", "img")
+                div_img.setAttribute("id", f"img_{time_B[0][jogador]}")
+
+                div_nick = document.createElement("div")
+                div_nick.setAttribute("class", "nick")
+                div_nick.setAttribute("id", f"nick_{time_B[0][jogador]}")
+
+                img_nick = document.createElement("img")
+                img_nick.setAttribute("src", f"{time_B[1][jogador]['role']['displayIcon']}")
+
+                p_nick = document.createElement("p")
+                p_nick.setAttribute("id", f"p_nick_{time_B[0][jogador]}")
+
+                div_nick.append(img_nick)
+                div_nick.append(p_nick)
+
+                
+                
+                div_jogador.append(div_img)
+                div_jogador.append(div_nick)
+
+                defesa.append(div_jogador)
+
+                img_nome = document.getElementById(f"img_{time_B[0][jogador]}")
+                img_nome.style.backgroundImage = f"url({time_B[1][jogador]['displayIcon']})"
+
+                pyscript.write(f"p_nick_{time_B[0][jogador]}", time_B[0][jogador])
+            
+            sortear_mapa()
+
+            header = document.getElementById("header")
+            header.style.display = "flex"
+            main = document.getElementById("main")
+            main.style.display = "flex"
+            
+
+        def sortear_mapa():
+            mapas = []
+            fundos = []
+            for valor in output['data']:
+                if valor['displayName'] != 'The Range':
+                    mapas.append(valor['displayName'])
+                    fundos.append(valor['splash'])
+
+            mapa_sorteado = random.randint(0, len(mapas))
+            pyscript.write("h1_mapa", f"{mapas[mapa_sorteado].upper()}")
+
+            fundo_mapa = document.getElementById("mapa")
+            fundo_mapa.style.backgroundImage = f"url({fundos[mapa_sorteado]})"
+                
+        
+
+        def sortear_personagem(time):
+            agentes = []
+            nomes = []
+
+            for valor in agente_saida['data']:
+                agentes.append(valor)
+
+            for agente in agentes:
+                nomes.append(agente['displayName'])
+
+
+            agentes_sorteados = []
+            
+            while len(agentes_sorteados) < len(time):
+                agentee = random.choice(nomes)
+                if agente not in agentes_sorteados:
+                    for agente in agentes:
+                        if agente['displayName'] == agentee:
+                            agentes_sorteados.append(agente)
+            return agentes_sorteados
+
+
+
+
+
+        def Limpar(proxy: JsProxy) -> None:
+
+            for jogador in jogadores:
+                jogadores_cadastrados = document.getElementById(f"div_{jogador}")
+                jogadores_cadastrados.remove()
+
+                jogadores_main = document.getElementById(f"jogador_{jogador}")
+                jogadores_main.remove()
+                
+
+            header = document.getElementById("header")
+            header.style.display = "none"
+            main = document.getElementById("main")
+            main.style.display = "none"
+
+            for jogador in range(len(jogadores)):
+                jogadores.pop(-1)
+
+        <!-- 
+        def sortear_mapa():
+            response = await pyfetch(url="https://valorant-api.com/v1/maps", method="GET")
+            output = await response.json()
+        
+            mapas = []
+            for valor in output['data']:
+                if valor['displayName'] != 'The Range':
+                    mapas.append(valor['displayName'])
+                
+            mapa_sorteado = random.randint(0, len(mapas))
+            pyscript.write("h1_mapa", mapas[mapa_sorteado].upper()) -->
+
+    </py-script>
+</body>
+</html>

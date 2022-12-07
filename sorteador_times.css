@@ -1,0 +1,654 @@
+@font-face {
+  font-family: valorant;
+  src: url(Valorant\ Font.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* background-color: #622d93; */
+    background-image: url("img/raze-valorant-4k-mf.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    
+    width: 100%;
+    height: 100vh;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+form label {
+    font-family: valorant;
+    color: #ff4655;
+}
+
+form input {
+    margin: 20px 0;
+}
+
+h1 {
+    font-family: valorant;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.name {
+    font-family: inherit;
+    font-weight: 800;
+    color: #333;
+    height: 60px;
+    border-radius: 10px;
+    border: 2px solid rgba(126,126,126,0.1);
+}
+
+.name:hover {
+    background: #ededed;
+}
+
+.jogadores p {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+} 
+
+
+section .jogadores {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  /* border: 1px solid red; */
+  align-items: center;
+  justify-content: space-evenly; 
+  font-family: valorant;
+  color: #ff4655;
+  flex-wrap: wrap;
+}
+
+
+
+.jogadores .jogador {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    /* margin: 10px; */
+}
+
+
+
+/* 
+    // border: 2px solid #788BFF; 
+    // border: 2px solid #7AE582;  
+*/
+
+
+.btn {
+    /* Clean style */
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background: none;
+    padding: 0;
+    color: var(--button-text-color);
+    cursor: pointer;
+    /* Clean style */
+    --button-text-color: var(--background-color);
+    --button-text-color-hover: var(--button-background-color);
+    --border-color: #7D8082;
+    --button-background-color: #ece8e1;
+    --highlight-color: #ff4655;
+    --button-inner-border-color: transparent;
+    --button-bits-color: var(--background-color);
+    --button-bits-color-hover: var(--button-background-color);
+    position: relative;
+    padding: 8px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    -webkit-transition: all .15s ease;
+    transition: all .15s ease;
+}
+
+.jogador button.btn {
+    padding: 4px ;
+    margin: 0;
+}
+
+.btn::before,
+.btn::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: calc(50% - 5px);
+    border: 1px solid var(--border-color);
+    -webkit-transition: all .15s ease;
+    transition: all .15s ease;
+}
+
+.btn::before {
+    top: 0;
+    border-bottom-width: 0;
+}
+
+.btn::after {
+    bottom: 0;
+    border-top-width: 0;
+}
+
+.btn:active,
+.btn:focus {
+    outline: none;
+}
+
+.btn:active::before,
+.btn:active::after {
+    right: 3px;
+    left: 3px;
+}
+
+.btn:active::before {
+    top: 3px;
+}
+
+.btn:active::after {
+    bottom: 3px;
+}
+
+
+.btn__inner {
+    position: relative;
+    display: block;
+    padding: 20px 30px;
+    background-color: var(--button-background-color);
+    overflow: hidden;
+    -webkit-box-shadow: inset 0px 0px 0px 1px var(--button-inner-border-color);
+            box-shadow: inset 0px 0px 0px 1px var(--button-inner-border-color);
+}
+
+.jogador button .btn__inner {
+    padding: 5px 10px;
+}
+
+.btn__inner::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    background-color: var(--button-bits-color);
+}
+
+.btn__inner::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 4px;
+    height: 4px;
+    background-color: var(--button-bits-color);
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+.btn__slide {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: -1px;
+    left: -8px;
+    width: 0;
+    background-color: var(--highlight-color);
+    -webkit-transform: skew(-15deg);
+            transform: skew(-15deg);
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+.btn__content {
+    position: relative;
+}
+
+.btn:hover {
+    color: var(--button-text-color-hover);
+}
+
+.btn:hover .btn__slide {
+    width: calc(100% + 15px);
+}
+
+.btn:hover .btn__inner::after {
+    background-color: var(--button-bits-color-hover);
+}
+
+.btn--light {
+    --button-background-color: var(--background-color);
+    --button-text-color: var(--highlight-color);
+    --button-inner-border-color: var(--highlight-color);
+    --button-text-color-hover: #ece8e1;
+    --button-bits-color-hover: #ece8e1;
+}
+
+.jogador p {
+    margin: 10px;
+}
+
+.jogador button {
+    display: flex;
+}
+
+/* Buttons */
+
+.btn {
+  /* Clean style */
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--button-text-color);
+  cursor: pointer;
+  /* Clean style */
+  --button-text-color: var(--background-color);
+  --button-text-color-hover: var(--button-background-color);
+  --border-color: #7D8082;
+  --button-background-color: #ece8e1;
+  --highlight-color: #ff4655;
+  --button-inner-border-color: transparent;
+  --button-bits-color: var(--background-color);
+  --button-bits-color-hover: var(--button-background-color);
+  position: relative;
+  padding: 8px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  -webkit-transition: all .15s ease;
+  transition: all .15s ease;
+  }
+  
+  .jogador button.btn {
+    padding: 4px ;
+    margin: 0;
+  }
+
+  .btn::before,
+  .btn::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid var(--border-color);
+  -webkit-transition: all .15s ease;
+  transition: all .15s ease;
+  }
+  
+  .btn::before {
+  top: 0;
+  border-bottom-width: 0;
+  }
+  
+  .btn::after {
+  bottom: 0;
+  border-top-width: 0;
+  }
+  
+  .btn:active,
+  .btn:focus {
+  outline: none;
+  }
+  
+  .btn:active::before,
+  .btn:active::after {
+  right: 3px;
+  left: 3px;
+  }
+  
+  .btn:active::before {
+  top: 3px;
+  }
+  
+  .btn:active::after {
+  bottom: 3px;
+  }
+  
+  .btn__inner {
+  position: relative;
+  display: block;
+  padding: 20px 30px;
+  background-color: var(--button-background-color);
+  overflow: hidden;
+  -webkit-box-shadow: inset 0px 0px 0px 1px var(--button-inner-border-color);
+          box-shadow: inset 0px 0px 0px 1px var(--button-inner-border-color);
+  }
+  
+  .jogador button .btn__inner {
+    padding: 5px 10px;
+  }
+
+  .btn__inner::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: var(--button-bits-color);
+  }
+  
+  .btn__inner::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: var(--button-bits-color);
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  }
+  
+  .btn__slide {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -8px;
+  width: 0;
+  background-color: var(--highlight-color);
+  -webkit-transform: skew(-15deg);
+          transform: skew(-15deg);
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  }
+  
+  .btn__content {
+  position: relative;
+  }
+  
+  .btn:hover {
+  color: var(--button-text-color-hover);
+  }
+  
+  .btn:hover .btn__slide {
+  width: calc(100% + 15px);
+  }
+  
+  .btn:hover .btn__inner::after {
+  background-color: var(--button-bits-color-hover);
+  }
+  
+  .btn--light {
+  --button-background-color: var(--background-color);
+  --button-text-color: var(--highlight-color);
+  --button-inner-border-color: var(--highlight-color);
+  --button-text-color-hover: #ece8e1;
+  --button-bits-color-hover: #ece8e1;
+  }
+
+.jogadores .jogador p {
+  margin: 10px;
+}
+
+.jogador button {
+  display: flex;
+}
+
+
+.cadastro {
+    display: flex;
+    border: 2px solid #ff4655;
+    border-radius: 10px;
+    background: rgba(16, 24, 35, 0.7);
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    padding: 40px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px #101823;
+    transition: .5s;
+}
+
+.botoes {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+
+
+header {
+    display: none;
+    height: 10vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100px;
+    background: linear-gradient(120deg, #01a8a866, #01a8a8 50%, #ff4655 50%, #ff465566); 
+}
+
+.defensores {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-transform: uppercase;
+    font-family: 'roboto';
+    font-size: 40px;
+    color: #fff;
+}
+
+.atacantes {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-family: 'roboto';
+    font-size: 40px;
+    color: #fff;
+}
+
+main {
+    display: none;
+    width: 100%;
+    height: 90%;
+    background: linear-gradient(to right, #01a8a8,#ff4655); 
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.jogador p {
+    margin: 0;   
+}
+.defesa {
+    display: flex;
+    height: 90vh;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-wrap: wrap
+}
+
+.defesa .jogador {
+    background: linear-gradient(to right, #01a8a8 10%, #01a8a866 20%);
+    width: 350px;
+    /* border: 2px solid #ff4654; */
+    box-shadow: 0px 0px 10px#000;
+}
+
+.img {
+    height: 116px;
+    /* background-color: linear-gradient(to left, #ff465566, #ff4655); */
+    background-image: url('https://media.valorant-api.com/agents/f94c3b30-42be-e959-889c-5aa313dba261/displayicon.png');
+    background-repeat: no-repeat;
+    background-size: 219px;
+    background-position-y: center;
+}
+
+.nick {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.defesa .nick img {
+    height: 23px;
+    padding: 5px;
+    background-color: #01a8a8;
+}
+
+.nick p {
+    padding: 7px;
+    height: 100%;
+    width: 100%;
+    font-family: 'roboto';
+    color: #fff;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent);
+}
+
+.ataque {
+    display: flex;
+    height: 90vh;
+    flex-direction: column;
+    justify-content: space-evenly;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    flex-wrap: wrap
+}
+
+.ataque p {
+    text-align: right;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.7), transparent);
+    transform: scaleX(-1);
+}
+
+.ataque .jogador {
+    background: linear-gradient(to right, #ff4655 10%, #ff465566 20%);
+    width: 350px;
+    box-shadow: 0px 0px 10px#000;
+}
+
+.ataque .nick img {
+    height: 23px;
+    padding: 5px;
+    background-color: #ff4655;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    /* align-items: center; */
+    /* width: 448px; */
+    /* height: 200px;
+    align-self: end;
+    animation: 400ms ease-in-out 500ms 1 slideInFromTop backwards; */
+}   
+
+.first {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    clip-path: polygon(0 10%, 70% 90%, 35% 90%, 0 50%);
+    
+}
+
+.second {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    /* 0f1923 */
+    background-color: #fff;
+    clip-path: polygon(100% 10%, 100% 50%, 88% 65%, 55% 65%);
+}
+  
+ 
+.mapa {
+    width: 50%;
+    height: 80%;
+    background-image: url("https://media.valorant-api.com/maps/7eaecc1b-4337-bbf6-6ab9-04b8f06b3319/splash.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-y: bottom;
+}
+
+.mapa h1 {
+    color: #FFF;
+    text-align: center;
+    margin: 50px auto;
+    font-size: 50px;
+    font-family: valorant;
+    letter-spacing: 30px;
+    width: 100%;
+}
+
+@media (max-width: 1500px) {
+    main {
+        display: none;
+        height: auto; 
+        justify-content: space-around;
+        align-items: center;
+    }
+    .defesa, .ataque {
+        display: flex;
+        height: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .mapa {
+        width: 100%;
+        background-position: center;
+        padding: 9%;
+        margin: 10% auto;
+    } 
+  
+
+    
+}
+
+@media (max-width: 999px) {
+    main {
+        display: none;
+        height: auto;  
+        justify-content: space-around;
+        align-items: center;
+    }
+    .defesa {
+        height: 100%;
+    }
+    .mapa {
+        width: 100%;
+        background-position: center;
+        padding: 9%;
+        margin: 10% auto;
+    }
+    .cadastro {
+        width: 90%;
+        padding: 10px;
+    }
+}
