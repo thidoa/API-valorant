@@ -38,75 +38,77 @@
         from pyodide.http import pyfetch
         import asyncio
         import js
+
+        async def main():
+            response = await pyfetch(url="https://valorant-api.com/v1/agents", method="GET")
             
-        response = await pyfetch(url="https://valorant-api.com/v1/agents", method="GET")
-        
-        output = await response.json()
-        
-        agentes = []
-
-        for valor in output['data']:
-            agentes.append(valor)
+            output = await response.json()
             
-        nome = agentes[0]['displayName']
-        image = agentes[0]['fullPortrait']
-        background = agentes[0]['background']
+            agentes = []
 
-        card = document.getElementById('card')
-
-        for agente in agentes:
-            
-            if(agente['fullPortrait'] == None):
-                continue
-            else:
-                personagem = agente['displayName']
-
-                div_container = document.createElement("div")
-
+            for valor in output['data']:
+                agentes.append(valor)
                 
-                div_container.setAttribute("class", "container")
-                div_container.setAttribute("id", f"container_id_{personagem}")
+            nome = agentes[0]['displayName']
+            image = agentes[0]['fullPortrait']
+            background = agentes[0]['background']
 
-                card.append(div_container)
+            card = js.document.getElementById('card')
+
+            for agente in agentes:
+                
+                if(agente['fullPortrait'] == None):
+                    continue
+                else:
+                    personagem = agente['displayName']
+
+                    div_container = js.document.createElement("div")
+
                     
-                box = document.getElementById(f'container_id_{personagem}')
+                    div_container.setAttribute("class", "container")
+                    div_container.setAttribute("id", f"container_id_{personagem}")
+
+                    card.append(div_container)
+                        
+                    box = js.document.getElementById(f'container_id_{personagem}')
 
 
-                a_agente = document.createElement("a")
-                a_agente.setAttribute("href", f"agente.html?id={agente['uuid']}")
-                a_agente.setAttribute("id", f"agente_id_{personagem}")
+                    a_agente = js.document.createElement("a")
+                    a_agente.setAttribute("href", f"agente.html?id={agente['uuid']}")
+                    a_agente.setAttribute("id", f"agente_id_{personagem}")
 
-                box.append(a_agente)
+                    box.append(a_agente)
 
-                a_agente_id = document.getElementById(f"agente_id_{personagem}")
+                    a_agente_id = js.document.getElementById(f"agente_id_{personagem}")
 
-                
+                    
 
-                div_box = document.createElement("div")
-                
-                div_box.setAttribute("class", "box")
-                div_box.setAttribute("id", f"{agente['displayName']}")
+                    div_box = js.document.createElement("div")
+                    
+                    div_box.setAttribute("class", "box")
+                    div_box.setAttribute("id", f"{agente['displayName']}")
 
 
 
-                a_agente_id.append(div_box)
+                    a_agente_id.append(div_box)
 
-                imagem_agente = agente['fullPortrait']
+                    imagem_agente = agente['fullPortrait']
 
-                elemento_imagem = document.createElement("img")
-                elemento_imagem.setAttribute("src", f"{imagem_agente}")
-                
-                id_agente = document.getElementById(f'{personagem}')
-                id_agente.append(elemento_imagem)
+                    elemento_imagem = js.document.createElement("img")
+                    elemento_imagem.setAttribute("src", f"{imagem_agente}")
+                    
+                    id_agente = js.document.getElementById(f'{personagem}')
+                    id_agente.append(elemento_imagem)
 
-                background_agente = agente['background']
+                    background_agente = agente['background']
 
-                color1 = agente['backgroundGradientColors'][0]
-                color2 = agente['backgroundGradientColors'][1]
-                color3 = agente['backgroundGradientColors'][2]
-                color4 = agente['backgroundGradientColors'][3]
+                    color1 = agente['backgroundGradientColors'][0]
+                    color2 = agente['backgroundGradientColors'][1]
+                    color3 = agente['backgroundGradientColors'][2]
+                    color4 = agente['backgroundGradientColors'][3]
 
-                id_agente.style.backgroundImage = f"url('{background_agente}'), linear-gradient(#{color1}, #{color2}, #{color3}, #{color4})"          
+                    id_agente.style.backgroundImage = f"url('{background_agente}'), linear-gradient(#{color1}, #{color2}, #{color3}, #{color4})"
+        asyncio.ensure_future(main())       
     </py-script> 
 </body>
 </html>
