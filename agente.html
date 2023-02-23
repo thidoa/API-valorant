@@ -186,7 +186,7 @@
             info = js.document.querySelector('.info')
             info.style.background = f"#{color_person}"
 
-            title_aba = document.querySelector('title')
+            title_aba = js.document.querySelector('title')
             title_aba.textContent = agente['displayName']
 
         asyncio.ensure_future(main()) 
