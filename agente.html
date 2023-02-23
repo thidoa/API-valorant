@@ -166,7 +166,29 @@
             body = js.document.querySelector('body')
 
             body.style.backgroundImage = f"url('{background_agente}'), linear-gradient(#{color1}, #{color2}, #{color3}, #{color4})"
+
+
+            def colorPerson(color, transparent):
+                color_person = ''
+                contador = 0
+                for c in color:
+                    if contador < (len(color) - 2):
+                        color_person += c
+                    contador += 1
+                color_person += str(transparent)
+
+                return color_person
             
+            color_person = colorPerson(color2, 33)
+            
+            abilities = js.document.querySelector('.abilities')
+            abilities.style.background = f"#{color_person}"
+            info = js.document.querySelector('.info')
+            info.style.background = f"#{color_person}"
+
+            title_aba = document.querySelector('title')
+            title_aba.textContent = agente['displayName']
+
         asyncio.ensure_future(main()) 
 
 
