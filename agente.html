@@ -6,125 +6,171 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="agente.css">
     <link  href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     <title>Document</title>
-    <!-- <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/>
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script> -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/>
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
 </head>
 <body>
-    <!-- <py-script>
+    <div class="personagem">
+    </div>    
+    <div class="caracteristicas">
+        <div class="info">
+            <h1 class="function"></h1>
+            <p class="name"></p>
+            <img class="img_function" alt="">
+            <p class="description"></p>
+            <div class="details">
+                <p class="nome"></p>
+                <p class="detail"></p>
+            </div>
+        </div>
+    </div>
+    <div class="abilities">
+        <div class="ability">
+            <div class="img">
+                <img class="img_ability1" alt="">
+                
+            </div>
+            <div>
+                <p class="title_ability1"></p>
+                <span class="linhas">
+                    <hr class="ponta">
+                    <hr class="center">
+                    <hr class="ponta">
+                </span>
+                <p class="content_ability1"></p>
+            </div>
+        </div>
+        <div class="ability">
+            <img class="img_ability2" alt="">
+            <div>
+                <p class="title_ability2"></p>
+                <span class="linhas">
+                    <hr class="ponta">
+                    <hr class="center">
+                    <hr class="ponta">
+                </span>
+                <p class="content_ability2"></p>
+            </div>
+        </div>
+        <div class="ability">
+            <img class="img_grenade" alt="">
+            <div>
+                <p class="title_grenade"></p>
+                <span class="linhas">
+                    <hr class="ponta">
+                    <hr class="center">
+                    <hr class="ponta">
+                </span>
+                <p class="content_grenade"></p>
+            </div>
+        </div>
+        <div class="ability">
+            <img class="img_ultimate" alt="">
+            <div>
+                <p class="title_ultimate"></p>
+                <span class="linhas">
+                    <hr class="ponta">
+                    <hr class="center">
+                    <hr class="ponta">
+                </span>
+                <p class="content_ultimate"></p>
+            </div>
+        </div>
+
+    </div>
+    <py-script>
         
+        from pyodide.http import pyfetch
         from js import window
+        import asyncio
         import js
 
-        teste3 = window.location.search
-        print(teste3)
+        id_url = window.location.search
+        ##print(teste3)
 
-        vaidacerto = ''
+        uuid = ''
         contador = 0
 
-        for i in teste3:
+        for i in id_url:
             contador += 1; 
             if(contador > 4):
-                vaidacerto += i
+                uuid += i
 
 
-        print(vaidacerto)
+        ##print(uuid)
+        async def main():
+            response = await pyfetch(url=f"https://valorant-api.com/v1/agents/{uuid}", method="GET")
+            
+            output = await response.json()
+
+            agente = output['data']
+
+            personagem = js.document.querySelector(".personagem")
+            img = js.document.createElement("img")
+            img.setAttribute("src", f"{agente['fullPortrait']}")
+            personagem.append(img)
+
+            ## INFO
+            function = js.document.querySelector('.function')
+            function.textContent = agente['role']['displayName']
+            name = js.document.querySelector('.name')
+            name.textContent = agente['displayName']
+            img_function = js.document.querySelector('.img_function')
+            img_function.setAttribute("src", f"{agente['role']['displayIcon']}")
+            description = js.document.querySelector('.description')
+            description.textContent = agente['description']
+            nome = js.document.querySelector('.nome')
+            nome.textContent = agente['role']['displayName']
+            detail = js.document.querySelector('.detail')
+            detail.textContent = agente['role']['description']
+
+            ## ABILITIES
+            img_ability1 = js.document.querySelector('.img_ability1')
+            img_ability1.setAttribute("src", f"{agente['abilities'][0]['displayIcon']}")
+            title_ability1 = js.document.querySelector('.title_ability1')
+            title_ability1.textContent = agente['abilities'][0]['displayName']
+            content_ability1 = js.document.querySelector('.content_ability1')
+            content_ability1.textContent = agente['abilities'][0]['description']
+
+            img_ability2 = js.document.querySelector('.img_ability2')
+            img_ability2.setAttribute("src", f"{agente['abilities'][1]['displayIcon']}")
+            title_ability2 = js.document.querySelector('.title_ability2')
+            title_ability2.textContent = agente['abilities'][1]['displayName']
+            content_ability2 = js.document.querySelector('.content_ability2')
+            content_ability2.textContent = agente['abilities'][1]['description']
+
+            img_grenade = js.document.querySelector('.img_grenade')
+            img_grenade.setAttribute("src", f"{agente['abilities'][2]['displayIcon']}")
+            title_grenade = js.document.querySelector('.title_grenade')
+            title_grenade.textContent = agente['abilities'][0]['displayName']
+            content_ability1 = js.document.querySelector('.content_grenade')
+            content_ability1.textContent = agente['abilities'][2]['description']
+
+            img_ultimate = js.document.querySelector('.img_ultimate')
+            img_ultimate.setAttribute("src", f"{agente['abilities'][3]['displayIcon']}")
+            title_ultimate = js.document.querySelector('.title_ultimate')
+            title_ultimate.textContent = agente['abilities'][3]['displayName']
+            content_ultimate = js.document.querySelector('.content_ultimate')
+            content_ultimate.textContent = agente['abilities'][3]['description']
+
+            ## BACKGROUND
+            background_agente = agente['background']
+
+            color1 = agente['backgroundGradientColors'][0]
+            color2 = agente['backgroundGradientColors'][1]
+            color3 = agente['backgroundGradientColors'][2]
+            color4 = agente['backgroundGradientColors'][3]
+
+            body = js.document.querySelector('body')
+
+            body.style.backgroundImage = f"url('{background_agente}'), linear-gradient(#{color1}, #{color2}, #{color3}, #{color4})"
+            
+        asyncio.ensure_future(main()) 
 
 
-    </py-script> -->
-    <!-- <section class="container">
-         <div class="skills"></div>
-        <div class="description"></div>
-        <span class="container_box">
-            <div class="box">
-                <span class="img">
-                    <img src="img/displayicon.png" alt="">
-                </span>
-                <div class="text">
-                    <h3>Seize</h3>
-                    <p>EQUIP a knot of raw fear. FIRE to throw. The knot drops down after a set time. RE-USE to drop the knot early. The knot ruptures on impact, holding nearby enemies in place. Held enemies are deafened, and decayed.</p>
-                </div>
-            </div>
-            <div class="box">
-                <span>
-                    <img src="img/displayicon.png" alt="">
-                </span>
-                <div class="text">
-                    <h3>Seize</h3>
-                    <p>EQUIP a knot of raw fear. FIRE to throw. The knot drops down after a set time. RE-USE to drop the knot early. The knot ruptures on impact, holding nearby enemies in place. Held enemies are deafened, and decayed.</p>
-                </div>
-            </div>
-            <div class="box">
-                <span>
-                    <img src="img/displayicon.png" alt="">
-                </span>
-                <div class="text">
-                    <h3>Seize</h3>
-                    <p>EQUIP a knot of raw fear. FIRE to throw. The knot drops down after a set time. RE-USE to drop the knot early. The knot ruptures on impact, holding nearby enemies in place. Held enemies are deafened, and decayed.</p>
-                </div>
-            </div>
-            <div class="box">
-                <span>
-                    <img src="img/displayicon.png" alt="">
-                </span>
-                <div class="text">
-                    <h3>Seize</h3>
-                    <p>EQUIP a knot of raw fear. FIRE to throw. The knot drops down after a set time. RE-USE to drop the knot early. The knot ruptures on impact, holding nearby enemies in place. Held enemies are deafened, and decayed.</p>
-                </div>
-            </div>
-        </span>
-        <span class="agent">
-            <div class="agent-img">
-                <img src="img/fullportrait.png" alt="">
-            </div>
-        </span>
-    </section> -->
-    <sction class="container">
-        <div class="card_infos">
-            <div class="cards">
-                <div class="card_img">
-                    <img src="img/displayicon.png" alt="">
-                </div>
-                <div class="card_text">
-                    <h1>Seize</h1>
-                    <p>EQUIP a knot of raw fear. FIRE to throw. The knot drops down after a set time. RE-USE to drop the knot early. The knot ruptures on impact, holding nearby enemies in place. Held enemies are deafened, and decayed.</p>
-                </div>
-            </div>
-
-            <div class="cards">
-                <div class="card_img">
-                    <img src="img/displayicon2.png" alt="">
-                </div>
-                <div class="card_text">
-                    <h1>Seize</h1>
-                    <p>EQUIP a knot of raw fear. FIRE to throw. The knot drops down after a set time. RE-USE to drop the knot early. The knot ruptures on impact, holding nearby enemies in place. Held enemies are deafened, and decayed.</p>
-                </div>
-            </div>
-
-            <div class="cards">
-                <div class="card_img">
-                    <img src="img/displayicon3.png" alt="">
-                </div>
-                <div class="card_text">
-                    <h1>Seize</h1>
-                    <p>EQUIP a knot of raw fear. FIRE to throw. The knot drops down after a set time. RE-USE to drop the knot early. The knot ruptures on impact, holding nearby enemies in place. Held enemies are deafened, and decayed.</p>
-                </div>
-            </div>
-
-            <div class="cards">
-                <div class="card_img">
-                    <img src="img/displayicon4.png" alt="">
-                </div>
-                <div class="card_text">
-                    <h1>Seize</h1>
-                    <p>EQUIP a knot of raw fear. FIRE to throw. The knot drops down after a set time. RE-USE to drop the knot early. The knot ruptures on impact, holding nearby enemies in place. Held enemies are deafened, and decayed.</p>
-                </div>
-            </div>
-        </div>
-        <div class="agent_img">
-            <img src="img/fullportrait.png" alt="">
-        </div>
-    </sction>
+    </py-script>
 
 </body>
 </html>

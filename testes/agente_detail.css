@@ -1,0 +1,98 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'MuseoModerno', cursive;
+    color: #fff;
+}
+
+body {
+    background-color: blue;
+    /* background-image: url('https://media.valorant-api.com/agents/dade69b4-4f5a-8528-247b-219e5a1facd6/background.png'); */
+    background-image: linear-gradient(145deg, #b1414c, #5589bd, #18344c, #66376c);
+
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    
+}
+
+
+
+.card_infos {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+    flex-direction: column;
+}
+
+.cards {
+    height: auto;
+    display: flex;
+    width: 800px;
+    justify-content: left;
+    align-items: center;
+    /* background-color: #18344c; */
+    border-top: solid 6px red;
+    margin: 5px;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-color: #0f1923;
+}
+
+.card-text {
+    padding: 20px;
+}
+
+.cards .card_text h1 {
+    font-size: 25px;
+}
+
+.text {
+    padding: 15px;
+}
+
+.card_img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    padding: 20px;
+    /* margin-right: 20px; */
+    background: rgba(197, 33, 33, 0);
+
+}
+
+.card_img img {
+    width: 130px;
+    height: 130px;
+
+}
+
+.agent_img img {
+    /* background-image: url('https://media.valorant-api.com/agents/dade69b4-4f5a-8528-247b-219e5a1facd6/background.png');
+    background-repeat: no-repeat;
+    background-position: center; */
+    width: 1000px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* @media (max-width: 999px) {
+    .continer {
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between;
+        height: 100vh;
+        width: 100%;
+        flex-wrap: wrap;
+        flex-direction: row;   
+    }
+} */
